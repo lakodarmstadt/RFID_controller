@@ -15,6 +15,7 @@ SPI.begin(); //Initializes the SPI bus by setting SCK, MOSI, and SS to outputs, 
 mfrc522.PCD_Init(); //Initialize RFID Reader
 pinMode (2, OUTPUT); // Der Pin 2 ist jetzt ein Ausgang (Hier wird eine LED angeschlossen)
 pinMode (3, OUTPUT); // Der Pin 3 ist jetzt ein Ausgang (Hier wird eine LED angeschlossen)
+
 }
 
 void loop()
@@ -48,16 +49,20 @@ Serial.print(" ");
 bool LEDPin2 = 0; // Value 0 means LED off
 bool LEDPin3 = 0; // Value 0 means LED off
 
+if (digitalRead (2)==HIGH) {LEDPin2=1;}else{LEDPin2=0;} //Transfer Pin state to boolean
+if (digitalRead (3)==HIGH) {LEDPin3=1;}else{LEDPin3=0;}
+
+
 if (code[0]==0xA5 && code[1]==0xDC && code[2]==0x1C && code[3]==0xA6) // IF the ChipID is A5 DC 1C A6 ...
 { // 
 if (LEDPin2 ==0) {//
-  digitalWrite (2, HIGH); LEDPin2==1; // ...Turn on LED 2 if it is off...
-}else {digitalWrite (2, LOW); LEDPin2==0;} // Turn off LED 2 if it is on
+  digitalWrite (2, HIGH); LEDPin2 = 1 ;delay(1000); // ...Turn on LED 2 if it is off...
+}else {digitalWrite (2, LOW); LEDPin2 = 0;delay(1000);} // Turn off LED 2 if it is on
 } // 
 
 if (code[0]==0x8E && code[1]==0xE3 && code[2]==0xC2 && code[3]==0x20) // IF the ChipID is A5 DC 1C A6 ...
 { // 
-if (LEDPin3 ==0) {digitalWrite (3, HIGH); LEDPin3==1; // ...Turn on LED 3 if it is off...
-}else {digitalWrite (3, LOW); LEDPin3==0;} // Turn off LED 3 if it is on
-} // 
+if (LEDPin3 ==0) {digitalWrite (3, HIGH); LEDPin3 = 1;delay(1000); // ...Turn on LED 3 if it is off...
+}else {digitalWrite (3, LOW); LEDPin3 = 0;delay(1000);} // Turn off LED 3 if it is on
+} //
 } // Close Sketch
